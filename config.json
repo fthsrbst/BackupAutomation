@@ -1,0 +1,5 @@
+{
+    "source_path": "/Users/fatih/projects",
+    "destination_path": "/Users/fatih/Desktop/backup",
+    "schedule": "0 0 * * *"
+}
