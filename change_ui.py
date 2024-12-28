@@ -1,4 +1,5 @@
 import json
+import subprocess
 from tkinter import Tk, Label, Button, filedialog, messagebox
 
 CONFIG_FILE = "config.json"
@@ -27,6 +28,14 @@ def update_destination_path():
         write_json(CONFIG_FILE, data)
         messagebox.showinfo("Success", f"Destination path updated to:\n{file_path}")
 
+def run_backup_script():
+    try:
+        # `backup_script.sh` dosyasını çalıştır
+        subprocess.run(["bash", "backup_script.sh"], check=True)
+        messagebox.showinfo("Success", "Backup process completed successfully!")
+    except subprocess.CalledProcessError as e:
+        messagebox.showerror("Error", f"Backup process failed!\nError: {e}")
+
 def create_gui():
     root = Tk()
     root.title("Backup Configuration")
@@ -40,10 +49,13 @@ def create_gui():
     # Destination path butonu
     Button(root, text="Change Destination Path", command=update_destination_path, width=30).pack(pady=10)
 
+    # Manuel yedekleme butonu
+    Button(root, text="Manual Backup", command=run_backup_script, width=30).pack(pady=10)
+
     # Çıkış butonu
     Button(root, text="Exit", command=root.quit, width=30).pack(pady=10)
 
-    root.geometry("400x200")
+    root.geometry("400x250")
     root.mainloop()
 
 if __name__ == "__main__":
